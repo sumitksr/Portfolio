@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smooth Cursor Trail</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      cursor: none;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    .cursor-ball {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: #ff3377;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      transition: transform 0.05s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-ball" id="cursorBall"></div>
+  <canvas id="trailCanvas"></canvas>
+
+  <script>
+    // Get elements
+    const ball = document.getElementById('cursorBall');
+    const canvas = document.getElementById('trailCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Store points for the trail
+    const points = [];
+    const maxPoints = 20;       // Shorter trail
+    const trailLifetime = 300;  // Short trail persistence
+    const gapDistance = 25;     // Gap between cursor and trail start
+
+    // Variables for mouse position with easing for smoothness
+    let mouseX = 0, mouseY = 0;
+    let ballX = 0, ballY = 0;
+    let lastX = 0, lastY = 0;
+    const easing = 0.2;        // Easing factor for smooth movement
+    const minDistance = 1;     // Precise tracking
+
+    // Trail points history
+    const trailHistory = [];   // Store previous positions for delayed trail
+    const historyLength = 5;   // How many positions to delay the trail by
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Track mouse movement
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function updateBallPosition() {
+      // Apply easing for smoother ball movement
+      ballX += (mouseX - ballX) * easing;
+      ballY += (mouseY - ballY) * easing;
+      
+      // Move the ball to the eased position
+      ball.style.left = ballX + 'px';
+      ball.style.top = ballY + 'px';
+      
+      // Store position history
+      trailHistory.unshift({ x: ballX, y: ballY });
+      
+      // Keep history to limited size
+      if (trailHistory.length > historyLength) {
+        // Get the delayed position from history
+        const delayedPos = trailHistory.pop();
+        
+        // Calculate angle from current ball position to delayed position
+        const angle = Math.atan2(ballY - delayedPos.y, ballX - delayedPos.x);
+        
+        // Calculate position with a gap from ball
+        const trailStartX = delayedPos.x + (gapDistance * Math.cos(angle + Math.PI));
+        const trailStartY = delayedPos.y + (gapDistance * Math.sin(angle + Math.PI));
+        
+        // Only add a new point if moved enough
+        const dx = Math.abs(trailStartX - lastX);
+        const dy = Math.abs(trailStartY - lastY);
+        
+        if (dx + dy > minDistance) {
+          lastX = trailStartX;
+          lastY = trailStartY;
+          addPoint(trailStartX, trailStartY);
+        }
+      }
+    }
+
+    function addPoint(x, y) {
+      // Add timestamp to track when this point should fade
+      points.push({
+        x,
+        y,
+        timestamp: Date.now()
+      });
+      
+      // Remove old points if we have too many
+      if (points.length > maxPoints) {
+        points.shift();
+      }
+    }
+
+    function drawTrail() {
+      // Clear the canvas with a slight fade effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Need at least 2 points to draw a line
+      if (points.length < 2) return;
+      
+      // Current time to calculate opacity
+      const now = Date.now();
+      
+      // Draw the entire trail as one continuous path
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      
+      // For each point, create a smooth curve
+      for (let i = 1; i < points.length - 2; i++) {
+        const xc = (points[i].x + points[i + 1].x) / 2;
+        const yc = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        
+        // Calculate how old this segment is
+        const age = now - points[i].timestamp;
+        if (age > trailLifetime) continue;
+        
+        // Calculate fade based on age - faster fade out
+        const opacity = 1 - (age / trailLifetime);
+        ctx.strokeStyle = `rgba(255, 51, 119, ${opacity * 0.8})`; // Increased opacity for better visibility
+        ctx.lineWidth = 4; 
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+      }
+      
+      // Draw the trail
+      ctx.stroke();
+      
+      // Remove points that are too old
+      while (points.length > 0 && now - points[0].timestamp > trailLifetime) {
+        points.shift();
+      }
+    }
+
+    // Animation loop
+    function animate() {
+      updateBallPosition();
+      drawTrail();
+      requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    animate();
+  </script>
+</body>
+</html> 

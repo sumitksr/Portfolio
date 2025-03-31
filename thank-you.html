@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You - Sumit Kumar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .thank-you-container {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .thank-you-message {
+      margin-bottom: 2rem;
+    }
+    
+    .thank-you-heading {
+      font-size: 3rem;
+      color: var(--bgOrange);
+      margin-bottom: 1rem;
+    }
+    
+    .thank-you-subheading {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #343d68;
+    }
+    
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .social-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .social-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .linkedin {
+      background-color: #0077B5;
+    }
+    
+    .gmail {
+      background-color: #D44638;
+    }
+    
+    .instagram {
+      background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    }
+    
+    .website {
+      background-color: #4285F4;
+    }
+    
+    .home {
+      background-color: #333;
+      margin-top: 2rem;
+    }
+    
+    .success-animation {
+      margin-bottom: 2rem;
+    }
+    
+    .checkmark {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: block;
+      stroke-width: 2;
+      stroke: #4bb71b;
+      stroke-miterlimit: 10;
+      box-shadow: 0 0 20px #4bb71b;
+      animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+      position: relative;
+      margin: 0 auto;
+    }
+    
+    .checkmark__circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+      stroke: #4bb71b;
+      fill: none;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+    
+    .checkmark__check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+    
+    @keyframes stroke {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    @keyframes scale {
+      0%, 100% {
+        transform: none;
+      }
+      50% {
+        transform: scale3d(1.1, 1.1, 1);
+      }
+    }
+    
+    @keyframes fill {
+      100% {
+        box-shadow: inset 0px 0px 0px 30px #4bb71b;
+      }
+    }
+  </style>
+</head>
+<body style="background-color: #d8d4d4;">
+  <div class="cursor-ball" id="cursorBall"></div>
+  <canvas id="trailCanvas"></canvas>
+  
+  <div class="thank-you-container">
+    <div class="success-animation">
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      </svg>
+    </div>
+    
+    <div class="thank-you-message">
+      <h1 class="thank-you-heading">Thank You!</h1>
+      <p class="thank-you-subheading">Your message has been successfully submitted.</p>
+      <p>I'll get back to you as soon as possible. In the meantime, feel free to connect with me on social media or check out my website.</p>
+    </div>
+    
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/sumitksr" class="social-button linkedin" target="_blank">
+        <i class="fab fa-linkedin-in"></i> LinkedIn
+      </a>
+      
+      <a href="mailto:sumitksr4156@gmail.com" class="social-button gmail">
+        <i class="far fa-envelope"></i> Gmail
+      </a>
+      
+      <a href="https://www.instagram.com/_sk_3110/" class="social-button instagram" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      
+      <a href="https://github.com/sumitksr" class="social-button website" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      
+      <a href="https://leetcode.com/u/sumitksr/" class="social-button" style="background-color: #F89F1B;" target="_blank">
+        <i class="fas fa-code"></i> LeetCode
+      </a>
+    </div>
+    
+    <a href="index.html" class="social-button home">
+      <i class="fas fa-home"></i> Back to Home
+    </a>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="cursor-animation.js"></script>
+</body>
+</html> 
