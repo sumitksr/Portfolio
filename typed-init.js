@@ -3,10 +3,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     var typeData = new Typed(".role", {
       strings: [
-        "Full Stack Developer",
+        "Student",
         "Web Developer",
-        "UI-UX Designer",
-        "Backend Developer",
+        "Fronten Developer",
         "Coder",
       ],
       loop: true,

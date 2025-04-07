@@ -40,10 +40,8 @@ Portfolio/
 │   │   ├── blob vector.png
 ├── index.html
 ├── styles.css
-├── script.js
 ├── typed-init.js
 ├── cursor-animation.js
-├── form-validation.js
 ├── README.md
 ```
 

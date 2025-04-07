@@ -136,7 +136,7 @@
   color:#2e3b55;
   left: 0;
   padding-left:2rem ;
-  bottom: -16%;
+  bottom: -15%;
   font-weight: bold;
   transition: all 3s;
 }
@@ -373,7 +373,7 @@
 }
 .project-subHeading{
   width: 70%;
-  font-size: 14px;
+  font-size: 15px;
   font-style: italic;
 }
 .btn-grp{
@@ -409,11 +409,11 @@
   background-image: url(./images/projects/Project2.png);
 }
 #project3{
-  background-image: url(./images/projects/Project3.png);
+  background-image: url(./images/projects/Project3.jpg);
 }
 #project4{
   margin-left:120px;
-  background-image: url(./images/projects/Project4.png);
+  background-image: url(./images/projects/Project4.jpg);
 }
 
 
@@ -597,8 +597,9 @@
   .skills-container{
     position: relative;
     display: flex;
+    align-items: center;
     padding: 2rem;
-    padding: top 5rem;
+    padding-top: 5rem;
     margin: 10rem auto;
     gap: 30px;
     width: 100%;
@@ -614,20 +615,34 @@
 }
 
 .skill-container-right{
-  display:flex;
-  flex-wrap:wrap;
-  width:50%;
-  position:relative;
-  gap:2rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* width:50%; */
+  position: relative;
+  gap: 1rem;
   justify-content: center;
+  align-items: center;
   padding-right: 3rem;
+  max-width: 500px;
+  margin-top: 0;
 }
 
-
-
+.tech-stack-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  position: relative;
+  z-index: 1;
+}
 
 .skills-logo{
-  width: 60px;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
   transition: all 0.5s;
 }
 
@@ -661,7 +676,7 @@
   background-color: #2e3b55;
   color: white;
   padding-bottom: 4rem;
-  padding-top: 3rem;
+  padding-top: 1rem;
   margin-bottom: 0;
   border-radius: 30px 30px 0 0;
   margin-top: 4rem;
@@ -709,7 +724,7 @@
   padding-top:1rem;
  
 }
-#submit-btn{
+.btn-pink[type="submit"]{
   border: none;
   font-size: 1.4rem;
   margin: 1rem 0;
@@ -717,25 +732,9 @@
   transition: transform 0.3s ease-out;
 }
 
-#submit-btn.dodge {
-  animation: dodgeButton 0.8s ease-in-out infinite;
-}
-
-@keyframes dodgeButton {
-  0% { transform: translate(0, 0); }
-  15% { transform: translate(-150px, 0); }
-  30% { transform: translate(0, -150px); }
-  45% { transform: translate(150px, 0); }
-  60% { transform: translate(0, 150px); }
-  75% { transform: translate(-100px, -100px); }
-  90% { transform: translate(100px, 100px); }
-  100% { transform: translate(0, 0); }
-}
-
-#submit-btn:hover{
+.btn-pink[type="submit"]:hover{
   scale: 0.9;
 }
-
 
 .submit-icon{
   padding: 0 1rem;
@@ -793,7 +792,12 @@ footer{
 
 /* Remove the blob animation */
 .blob-style{
-  display: none;
+  position: absolute;
+  z-index: -5;
+  animation: blobAnimate 3s linear infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
 }
 
 @keyframes blobAnimate {
